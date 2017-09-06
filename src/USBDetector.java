@@ -19,7 +19,8 @@ public class USBDetector {
 		File[] roots = File.listRoots();
 		for (int i = 0; i < roots.length; i ++) {
 			if(roots[i] == null) continue;
-			if (fsv.getSystemTypeDescription(roots[i]).contains("USB")
+			if ((fsv.getSystemTypeDescription(roots[i]).contains("USB")
+			    		|| fsv.getSystemTypeDescription(roots[i]).contains("Removable"))
 					&& !(USBDriverLetters.contains(roots[i].getPath()))) {
 				USBDriverLetters.addElement(roots[i].getPath());
 				
