@@ -63,7 +63,7 @@ class MainFrame extends JFrame {
 			@Override
 			public void onPlugUSB(File Drive) {
 				ImageFinder.copyImagesToTemp(Drive, null);
-				imageFolderTree.setDir(ImageFinder.tempDrive);
+				imageFolderTree.addDir(ImageFinder.tempDrive);
 				imageFolderTree.setVisible(false);
 				imageFolderTree.setVisible(true);
 			}

@@ -20,14 +20,15 @@ public class USBDetector {
 		for (int i = 0; i < roots.length; i ++) {
 			if(roots[i] == null) continue;
 			if ((fsv.getSystemTypeDescription(roots[i]).contains("USB")
-			    		|| fsv.getSystemTypeDescription(roots[i]).contains("Removable"))
+					|| fsv.getSystemTypeDescription(roots[i]).contains("Removable"))
 					&& !(USBDriverLetters.contains(roots[i].getPath()))) {
 				USBDriverLetters.addElement(roots[i].getPath());
 				
 				this.m_OnPlugUSBListener.onPlugUSB(roots[i]);
 				
 				// Now, I can detect only one USB drive. I will fix it later...
-				break;
+//				break;
+//				System.out.println(roots[i].getPath());
 			}
 		}
 	}

@@ -13,10 +13,11 @@ import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 class ImageFolderTree extends JPanel {
 	private OnFolderSelectedListener m_OnFolderSelectedListener = null;
-	private JTree m_tree;
+	private JTree m_tree = null;
 	private File m_dir;
 	
 	/*Constructor*/
@@ -50,18 +51,26 @@ class ImageFolderTree extends JPanel {
 	}
 	
 	public void setDir(File dir) {
+		System.out.println("SetDir: " + dir.getPath());
 		this.m_dir = new File(dir.getPath());
 		this.removeAll();
 		
 		// Make a tree list with all the nodes, and make it a JTree
-		m_tree = new JTree(addNodes(null, dir));
+		m_tree = new JTree(new DefaultMutableTreeNode());
+//		m_tree.setRootVisible(false);
+		DefaultTreeModel model = (DefaultTreeModel)m_tree.getModel();
+		DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
+		root.add(addNodes(null, dir));
+		model.reload(root);
+//		m_tree = new JTree(addNodes(null, dir));
 		
 		// Add a listener
+		String strTempDrivePath = ImageFinder.tempDrivePath;
 		m_tree.addTreeSelectionListener(new TreeSelectionListener() {
 			public void valueChanged(TreeSelectionEvent e) {
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.getPath().getLastPathComponent();
 				if (node.getChildCount() > 0) {
-					String path = ImageFinder.tempDrivePath + node.toString().substring(2);
+					String path = strTempDrivePath + node.toString().substring(2);
 					m_OnFolderSelectedListener.onFolderSelected(new File(path));
 				}
 			}
@@ -70,6 +79,18 @@ class ImageFolderTree extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.getViewport().add(m_tree);
 		this.add(scrollPane, BorderLayout.CENTER);
+	}
+	
+	public void addDir(File dir) {
+		if (this.m_dir == null) {
+			this.setDir(dir);
+		}
+		else {
+			DefaultTreeModel model = (DefaultTreeModel)m_tree.getModel();
+			DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
+			root.add(addNodes(null, dir));
+			model.reload(root);
+		}
 	}
 	
 	public void refresh() {
@@ -138,7 +159,7 @@ class ImageFolderTree extends JPanel {
 	}
 	
 	
-	public static void main(String[] args) {
+	public static void notmain(String[] args) {
 		JFrame frame = new JFrame("FileTree");
 		frame.setBackground(Color.BLACK);
 		frame.setBackground(Color.LIGHT_GRAY);
