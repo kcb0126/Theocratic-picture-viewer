@@ -32,7 +32,8 @@ class ImageGallery extends JPanel {
 		String strInstruction = "<html><center>Use arrow up/down keys to show the image on the secondary screen.<br>Supported file types PNG, GIF, JPG, JPEG, PDF and TIF</center></html>";
 		this.add(new JLabel(strInstruction, SwingConstants.CENTER), BorderLayout.NORTH);
 		picturePanel = new JPanel();
-		picturePanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+//		picturePanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+		picturePanel.setLayout(new VerticalWrapLayout(VerticalWrapLayout.TOP));
 		this.add(picturePanel, BorderLayout.CENTER);
 		cells = new ArrayList<ImageCellPanel>();
 		JButton removeButton = new JButton("Remove Selected");
