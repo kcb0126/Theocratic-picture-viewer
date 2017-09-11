@@ -21,7 +21,7 @@ class ImageGallery extends JPanel {
 	
 	private ArrayList<ImageCellPanel> cells;
 	
-	private OnImageBrokenListener m_onImageBrokenListener = null;
+	private OnImageSelectedListener m_onImageSelectedListener = null;
 	
 	private File m_dir = null;
 	
@@ -70,6 +70,7 @@ class ImageGallery extends JPanel {
 				MainFrame.sharedInstance.imageFolderTree.refresh();
 			}
 		});
+/*
 		JButton upButton = new JButton("UP");
 		upButton.addActionListener(new ActionListener() {
 			
@@ -87,6 +88,7 @@ class ImageGallery extends JPanel {
 			}
 		});
 		JButton downButton = new JButton("DOWN");
+		*/
 		JButton exitButton = new JButton("EXIT");
 		exitButton.addActionListener(new ActionListener() {
 			
@@ -110,7 +112,7 @@ class ImageGallery extends JPanel {
 				int newBrokenCellIndex, cellCountInRow;
 				if(arg0.getID() == KeyEvent.KEY_PRESSED) {
 					switch(arg0.getKeyCode()) {
-					case KeyEvent.VK_LEFT:
+/*					case KeyEvent.VK_LEFT:
 						newBrokenCellIndex = Math.max(m_brokenCellIndex - 1, 0);
 						breakCellAt(newBrokenCellIndex);
 						break;
@@ -122,11 +124,21 @@ class ImageGallery extends JPanel {
 					case KeyEvent.VK_RIGHT:
 						newBrokenCellIndex = Math.min(m_brokenCellIndex + 1, cells.size() - 1);
 						breakCellAt(newBrokenCellIndex);
-						break;
+						break; */
 					case KeyEvent.VK_DOWN:
-						cellCountInRow = MainFrame.sharedInstance.imageGallery.getWidth() / cells.get(0).getWidth();
+/*						cellCountInRow = MainFrame.sharedInstance.imageGallery.getWidth() / cells.get(0).getWidth();
 						newBrokenCellIndex = Math.min(m_brokenCellIndex + cellCountInRow, cells.size() - 1);
-						breakCellAt(newBrokenCellIndex);
+						breakCellAt(newBrokenCellIndex); */
+						if(cells.get(m_brokenCellIndex).isBroken()) {
+							cells.get(m_brokenCellIndex).setBroken(false);
+							cells.get(m_brokenCellIndex).unbreak();
+						}
+						else {
+							newBrokenCellIndex = Math.min(m_brokenCellIndex + 1, cells.size() - 1);
+							if(newBrokenCellIndex > m_brokenCellIndex) {
+								breakCellAt(newBrokenCellIndex);
+							}
+						}
 						break;
 					default:
 						
@@ -187,12 +199,18 @@ class ImageGallery extends JPanel {
 		int i = 0;
 		for(File file : listFiles) {
 			if(ImageFinder.isImage(file)) {
-				ImageCellPanel cell = new ImageCellPanel(i, file.getPath());
+				final ImageCellPanel cell = new ImageCellPanel(i, file.getPath());
 				cell.setOnBreakListener(new ImageCellPanel.OnBreakListener() {
 					
 					@Override
 					public void onBreak(int index) {
+						System.out.println("break " + index);
 						breakCellAt(index);
+					}
+					
+					@Override
+					public void onUnbreak(int index) {
+						m_onImageSelectedListener.onImageSelected(cell.getImagePath());
 					}
 				});
 				cells.add(cell);
@@ -206,13 +224,13 @@ class ImageGallery extends JPanel {
 		picturePanel.setVisible(true);
 	}
 	
-	public void setOnImageBrokenListener(OnImageBrokenListener onImageBrokenListener) {
-		this.m_onImageBrokenListener = onImageBrokenListener;
+	public void setOnImageSelectedListener(OnImageSelectedListener onImageSelectedListener) {
+		this.m_onImageSelectedListener = onImageSelectedListener;
 	}
 	
 	private void breakCellAt(int index) {
-		if(this.m_onImageBrokenListener != null) {
-			this.m_onImageBrokenListener.onImageBroken(cells.get(index).getImagePath());
+		if(this.m_onImageSelectedListener != null) {
+			this.m_onImageSelectedListener.onBroken();
 		}
 		
 		this.m_brokenCellIndex = index;
@@ -227,7 +245,8 @@ class ImageGallery extends JPanel {
 		}
 	}
 	
-	public interface OnImageBrokenListener {
-		public void onImageBroken(String imagePath);
+	public interface OnImageSelectedListener {
+		public void onImageSelected(String imagePath);
+		public void onBroken();
 	}
 }

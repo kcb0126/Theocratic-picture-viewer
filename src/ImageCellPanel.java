@@ -25,6 +25,8 @@ class ImageCellPanel extends JPanel {
 	
 	private int m_index;
 	
+	private boolean m_isbroken = false;
+	
 	public ImageCellPanel(int index, String imagePath) {
 		this.imagePath = imagePath;
 		if(ImageFinder.isPDF(new File(imagePath))) {
@@ -77,10 +79,19 @@ class ImageCellPanel extends JPanel {
 		else {
 			btnBreak.setBackground((new JButton()).getBackground());
 		}
+		this.m_isbroken = b;
+	}
+	
+	public void unbreak() {
+		this.m_OnBreakListener.onUnbreak(this.m_index);
 	}
 	
 	public boolean isChecked() {
 		return checkBox.isSelected();
+	}
+	
+	public boolean isBroken() {
+		return this.m_isbroken;
 	}
 	
 	private class BreakButtonClickListener implements ActionListener {
@@ -96,5 +107,6 @@ class ImageCellPanel extends JPanel {
 	
 	public interface OnBreakListener {
 		public void onBreak(int index);
+		public void onUnbreak(int index);
 	}
 }

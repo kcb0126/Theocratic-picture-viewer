@@ -26,11 +26,16 @@ class MainFrame extends JFrame {
 		this.setSize(width, height - 50);
 		
 		imageGallery = new ImageGallery();
-		imageGallery.setOnImageBrokenListener(new ImageGallery.OnImageBrokenListener() {
+		imageGallery.setOnImageSelectedListener(new ImageGallery.OnImageSelectedListener() {
 			
 			@Override
-			public void onImageBroken(String imagePath) {
+			public void onImageSelected(String imagePath) {
 				m_imageViewerPanel.setImage(imagePath);
+			}
+
+			@Override
+			public void onBroken() {
+				m_imageViewerPanel.setImage(null);
 			}
 		});
 
