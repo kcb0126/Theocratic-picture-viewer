@@ -57,7 +57,7 @@ class ImageFolderTree extends JPanel {
 		
 		// Make a tree list with all the nodes, and make it a JTree
 		m_tree = new JTree(new DefaultMutableTreeNode());
-//		m_tree.setRootVisible(false);
+		m_tree.setRootVisible(false);
 		DefaultTreeModel model = (DefaultTreeModel)m_tree.getModel();
 		DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
 		root.add(addNodes(null, dir));
