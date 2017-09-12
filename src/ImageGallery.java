@@ -28,10 +28,15 @@ class ImageGallery extends JPanel {
 	private int m_brokenCellIndex = -1;
 	
 	public ImageGallery() {
+		this.setBackground(Color.BLACK);
 		this.setLayout(new BorderLayout(10, 10));
 		String strInstruction = "<html><center>Use arrow up/down keys to show the image on the secondary screen.<br>Supported file types PNG, GIF, JPG, JPEG, PDF and TIF</center></html>";
-		this.add(new JLabel(strInstruction, SwingConstants.CENTER), BorderLayout.NORTH);
+		JLabel commentLabel = new JLabel(strInstruction, SwingConstants.CENTER);
+		commentLabel.setBackground(Color.BLACK);
+		commentLabel.setForeground(Color.WHITE);
+		this.add(commentLabel, BorderLayout.NORTH);
 		picturePanel = new JPanel();
+		picturePanel.setBackground(Color.BLACK);
 //		picturePanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		picturePanel.setLayout(new VerticalWrapLayout(VerticalWrapLayout.TOP));
 		this.add(picturePanel, BorderLayout.CENTER);
@@ -98,6 +103,7 @@ class ImageGallery extends JPanel {
 			}
 		});
 		JPanel buttonGroup = new JPanel();
+		buttonGroup.setBackground(Color.BLACK);
 		buttonGroup.add(removeButton);
 		buttonGroup.add(clearButton);
 //		buttonGroup.add(upButton);
