@@ -3,8 +3,10 @@ import java.awt.Image;
 import java.io.File;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class ImageViewerPanel extends JPanel {
 	
@@ -26,10 +28,13 @@ public class ImageViewerPanel extends JPanel {
 	}
 	
 	public void setImage(String imagePath) {
+		JFrame topFrame = (JFrame)SwingUtilities.getWindowAncestor(this);
 		if(imagePath == null) {
 			imageLabel.setIcon(null);
+			topFrame.setVisible(false);
 		}
 		else {
+			topFrame.setVisible(true);
 			if(ImageFinder.isPDF(new File(imagePath))) {
 				imagePath = imagePath + ".png_";
 			}
@@ -37,10 +42,15 @@ public class ImageViewerPanel extends JPanel {
 			
 			int originalWidth = image.getIconWidth();
 			int originalHeight = image.getIconHeight();
-			double ratio = Math.min((double)(this.getWidth()) / originalWidth, (double)(this.getHeight()) / originalHeight);
-			long newWidth = Math.round(originalWidth * ratio);
-			long newHeight = Math.round(originalHeight * ratio);
-			imageLabel.setIcon(new ImageIcon(image.getImage().getScaledInstance((int)newWidth, (int)newHeight, Image.SCALE_DEFAULT)));
+			if(originalWidth > originalHeight) {
+				imageLabel.setIcon(new ImageIcon(image.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT)));
+			}
+			else {
+				double ratio = Math.min((double)(this.getWidth()) / originalWidth, (double)(this.getHeight()) / originalHeight);
+				long newWidth = Math.round(originalWidth * ratio);
+				long newHeight = Math.round(originalHeight * ratio);
+				imageLabel.setIcon(new ImageIcon(image.getImage().getScaledInstance((int)newWidth, (int)newHeight, Image.SCALE_DEFAULT)));
+			}
 		}
 		this.setVisible(false);
 		this.setVisible(true);
