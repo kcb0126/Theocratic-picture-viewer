@@ -98,5 +98,6 @@ class MainFrame extends JFrame {
 		
 		this.setVisible(true);
 //		imageViewFrame.setVisible(true);
+		imageViewFrame.setUndecorated(true);
 	}
 }
