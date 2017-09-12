@@ -6,6 +6,8 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 
 import javax.swing.*;
@@ -99,5 +101,14 @@ class MainFrame extends JFrame {
 		this.setVisible(true);
 //		imageViewFrame.setVisible(true);
 		imageViewFrame.setUndecorated(true);
+		
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(new WindowAdapter() {
+			
+			@Override
+			public void windowClosing(WindowEvent windowEvent) {
+				System.exit(0);
+			}
+		});
 	}
 }
