@@ -36,18 +36,24 @@ class ImageCellPanel extends JPanel {
 		
 		this.setLayout(new BorderLayout(10, 10));
 		
-		this.add(new JLabel(String.valueOf(index + 1)), BorderLayout.WEST);
+		JLabel indexLabel = new JLabel(String.valueOf(index + 1));
+		indexLabel.setForeground(Color.WHITE);
+		this.add(indexLabel, BorderLayout.WEST);
 		
 		JPanel imageWithCheck = new JPanel();
+		imageWithCheck.setBackground(Color.BLACK);
 		this.add(imageWithCheck, BorderLayout.CENTER);
 		imageWithCheck.setLayout(new BorderLayout(5, 5));
 		checkBox = new JCheckBox();
+		checkBox.setBackground(Color.BLACK);
 		imageWithCheck.add(checkBox, BorderLayout.WEST);
 		JLabel label = new JLabel();
 		ImageIcon icon = new ImageIcon(imagePath);
 		label.setIcon(new ImageIcon(icon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
 		imageWithCheck.add(label, BorderLayout.CENTER);
-		imageWithCheck.add(new JPanel(), BorderLayout.EAST);
+		JPanel eastPanel = new JPanel();
+		eastPanel.setBackground(Color.BLACK);
+		imageWithCheck.add(eastPanel, BorderLayout.EAST);
 		
 		btnBreak = new JButton("BREAK");
 		btnBreak.addActionListener(new BreakButtonClickListener());
@@ -55,6 +61,7 @@ class ImageCellPanel extends JPanel {
 		
 		imageWithCheck.add(btnBreak, BorderLayout.NORTH);
 		JLabel imageName = new JLabel(new File(imagePath).getName(), SwingConstants.CENTER);
+		imageName.setForeground(Color.WHITE);
 		Dimension imageNameDimension = new Dimension(imageWithCheck.getWidth(), 20);
 
 		imageWithCheck.add(imageName, BorderLayout.SOUTH);
@@ -62,6 +69,7 @@ class ImageCellPanel extends JPanel {
 		imageName.setMinimumSize(imageNameDimension);
 		imageName.setPreferredSize(imageNameDimension);
 		imageName.setMaximumSize(imageNameDimension);
+		this.setBackground(Color.BLACK);
 	}
 	
 	public String getImagePath() {
