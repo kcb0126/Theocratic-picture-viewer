@@ -32,6 +32,8 @@ class ImageFolderTree extends JPanel {
 		this.m_dir = new File(dir.getPath());
 		this.setLayout(new BorderLayout());
 		
+		setDir(dir);
+		/*
 		// Make a tree list with all the nodes, and make it a JTree
 		m_tree = new JTree(addNodes(null, dir));
 		
@@ -44,6 +46,7 @@ class ImageFolderTree extends JPanel {
 				}
 			}
 		});
+		*/
 		// Lastly, put the JTree into a JScrollPane
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.getViewport().add(m_tree);
@@ -51,7 +54,6 @@ class ImageFolderTree extends JPanel {
 	}
 	
 	public void setDir(File dir) {
-		System.out.println("SetDir: " + dir.getPath());
 		this.m_dir = new File(dir.getPath());
 		this.removeAll();
 		
@@ -60,7 +62,22 @@ class ImageFolderTree extends JPanel {
 		m_tree.setRootVisible(false);
 		DefaultTreeModel model = (DefaultTreeModel)m_tree.getModel();
 		DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
-		root.add(addNodes(null, dir));
+//		root.add(addNodes(null, dir));
+		Vector<File> imageDirs = findImageDirs(dir);
+		for(int i = 0; i < imageDirs.size(); i ++) {
+			DefaultMutableTreeNode node = new DefaultMutableTreeNode(imageDirs.get(i).getPath().replace(ImageFinder.tempDrivePath, ImageFinder.tempDriveLetter + ":"));
+			root.add(node);
+			for(File file : imageDirs.get(i).listFiles()) {
+				if(!file.isDirectory()) {
+					if(ImageFinder.isImage(file)) {
+						DefaultMutableTreeNode imageNode = new DefaultMutableTreeNode(file.getPath().replace(ImageFinder.tempDrivePath, ImageFinder.tempDriveLetter + ":"));
+						node.add(imageNode);
+					}
+				}
+			}
+		}
+		
+		
 		model.reload(root);
 //		m_tree = new JTree(addNodes(null, dir));
 		
@@ -72,6 +89,7 @@ class ImageFolderTree extends JPanel {
 				if (node.getChildCount() > 0) {
 					String path = strTempDrivePath + node.toString().substring(2);
 					m_OnFolderSelectedListener.onFolderSelected(new File(path));
+					System.out.println("valueChanged " + path);
 				}
 			}
 		});
@@ -88,9 +106,36 @@ class ImageFolderTree extends JPanel {
 		else {
 			DefaultTreeModel model = (DefaultTreeModel)m_tree.getModel();
 			DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
-			root.add(addNodes(null, dir));
+//			root.add(addNodes(null, dir));
+			Vector<File> imageDirs = findImageDirs(dir);
+			for(int i = 0; i < imageDirs.size(); i ++) {
+				DefaultMutableTreeNode node = new DefaultMutableTreeNode(imageDirs.get(i).getPath().replace(ImageFinder.tempDrivePath, ImageFinder.tempDriveLetter + ":"));
+				root.add(node);
+				for(File file : imageDirs.get(i).listFiles()) {
+					if(!file.isDirectory()) {
+						if(ImageFinder.isImage(file)) {
+							DefaultMutableTreeNode imageNode = new DefaultMutableTreeNode(file.getPath().replace(ImageFinder.tempDrivePath, ImageFinder.tempDriveLetter + ":"));
+							node.add(imageNode);
+						}
+					}
+				}
+			}
 			model.reload(root);
 		}
+	}
+	
+	private Vector<File> findImageDirs(File dir) {
+		Vector<File> dirs = new Vector<File>();
+		if(ImageFinder.hasImageAsSon(dir)) {
+			dirs.add(dir);
+		}
+		File[] files = dir.listFiles();
+		for(int i = 0; i < files.length; i ++) {
+			if (files[i].isDirectory()) {
+				dirs.addAll(findImageDirs(files[i]));
+			}
+		}
+		return dirs;
 	}
 	
 	public void refresh() {

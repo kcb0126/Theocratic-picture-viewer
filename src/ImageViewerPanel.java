@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
 
@@ -15,6 +16,7 @@ public class ImageViewerPanel extends JPanel {
 	public ImageViewerPanel() {
 		imageLabel = new JLabel();
 		this.add(imageLabel);
+		this.setBackground(Color.BLACK);
 	}
 	
 	public ImageViewerPanel(String imagePath) {

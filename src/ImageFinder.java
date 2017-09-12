@@ -72,6 +72,18 @@ public class ImageFinder {
 		return false;
 	}
 	
+	public static boolean hasImageAsSon(File file) {
+		File[] list = file.listFiles();
+		for(File fil : list) {
+			if(!fil.isDirectory()) {
+				if(isImage(fil)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	public static void copyImagesToTemp(File dir, File tmpDir) {
 		if(tmpDir == null) {
 			tmpDir = new File(System.getProperty("java.io.tmpdir") + "\\USBDetector");
