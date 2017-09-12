@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.io.File;
@@ -13,6 +14,7 @@ import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 
 class ImageFolderTree extends JPanel {
@@ -23,16 +25,14 @@ class ImageFolderTree extends JPanel {
 	/*Constructor*/
 	public ImageFolderTree() {
 		this.setLayout(new BorderLayout());
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.getViewport().add(m_tree);
-		this.add(scrollPane, BorderLayout.CENTER);
+		this.setBackground(Color.BLACK);
 	}
 	
 	public ImageFolderTree(File dir) {
 		this.m_dir = new File(dir.getPath());
 		this.setLayout(new BorderLayout());
 		
-		setDir(dir);
+//		setDir(dir);
 		/*
 		// Make a tree list with all the nodes, and make it a JTree
 		m_tree = new JTree(addNodes(null, dir));
@@ -60,6 +60,9 @@ class ImageFolderTree extends JPanel {
 		// Make a tree list with all the nodes, and make it a JTree
 		m_tree = new JTree(new DefaultMutableTreeNode());
 		m_tree.setRootVisible(false);
+		m_tree.setBackground(Color.BLACK);
+		m_tree.setForeground(Color.WHITE);
+		m_tree.setCellRenderer(new MyCellRenderer());
 		DefaultTreeModel model = (DefaultTreeModel)m_tree.getModel();
 		DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
 //		root.add(addNodes(null, dir));
@@ -227,4 +230,32 @@ class ImageFolderTree extends JPanel {
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+	
+	public class MyCellRenderer extends DefaultTreeCellRenderer {
+		
+		@Override
+		public Color getBackgroundNonSelectionColor() {
+			return (null);
+		}
+		
+	    @Override
+	    public Color getBackgroundSelectionColor() {
+	        return Color.GREEN;
+	    }
+
+	    @Override
+	    public Color getBackground() {
+	        return (null);
+	    }
+
+	    @Override
+	    public Component getTreeCellRendererComponent(final JTree tree, final Object value, final boolean sel, final boolean expanded, final boolean leaf, final int row, final boolean hasFocus) {
+	        final Component ret = super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+
+	        final DefaultMutableTreeNode node = ((DefaultMutableTreeNode) (value));
+	        this.setText(value.toString());
+	        setForeground(Color.WHITE);
+	        return ret;
+	    }	
+    }
 }
