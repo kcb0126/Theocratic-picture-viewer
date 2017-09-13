@@ -9,6 +9,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -60,6 +62,21 @@ class ImageGallery extends JPanel {
 				MainFrame.sharedInstance.imageFolderTree.refresh();
 			}
 		});
+		Timer timer = new Timer();
+		TimerTask timerTask = new TimerTask() {
+			@Override
+			public void run() {
+				for(int i = 0; i < cells.size(); i ++) {
+					if(cells.get(i).isChecked()) {
+						removeButton.setEnabled(true);
+						return;
+					}
+				}
+				removeButton.setEnabled(false);
+			}
+		};
+		timer.scheduleAtFixedRate(timerTask, 0, 1000);
+
 		JButton clearButton = new JButton("Clear");
 		clearButton.addActionListener(new ActionListener() {
 			
@@ -231,6 +248,12 @@ class ImageGallery extends JPanel {
 		picturePanel.repaint();
 		picturePanel.setVisible(false);
 		picturePanel.setVisible(true);
+	}
+	
+	public void unPlug() {
+		this.picturePanel.removeAll();
+		this.picturePanel.setVisible(false);
+		this.picturePanel.setVisible(true);
 	}
 	
 	public void setOnImageSelectedListener(OnImageSelectedListener onImageSelectedListener) {

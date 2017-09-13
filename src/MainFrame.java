@@ -106,6 +106,13 @@ class MainFrame extends JFrame {
 				imageFolderTree.setVisible(false);
 				imageFolderTree.setVisible(true);
 			}
+
+			@Override
+			public void onUnplugUSB() {
+				imageFolderTree.unplug();
+				imageGallery.unPlug();
+				imageViewFrame.setVisible(false);
+			}
 		});
 		
 		this.setVisible(true);

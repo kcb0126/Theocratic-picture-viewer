@@ -107,6 +107,7 @@ class ImageFolderTree extends JPanel {
 			this.setDir(dir);
 		}
 		else {
+			this.m_dir = new File(dir.getPath());
 			DefaultTreeModel model = (DefaultTreeModel)m_tree.getModel();
 			DefaultMutableTreeNode root = (DefaultMutableTreeNode)model.getRoot();
 //			root.add(addNodes(null, dir));
@@ -143,6 +144,19 @@ class ImageFolderTree extends JPanel {
 	
 	public void refresh() {
 		this.setDir(this.m_dir);
+	}
+	
+	public void unplug() {
+		this.removeAll();
+		
+		// Make a tree list with all the nodes, and make it a JTree
+		m_tree = new JTree(new DefaultMutableTreeNode());
+		m_tree.setRootVisible(false);
+		m_tree.setBackground(Color.BLACK);
+		m_tree.setForeground(Color.WHITE);
+		m_tree.setCellRenderer(new MyCellRenderer());
+		this.setVisible(false);
+		this.setVisible(true);
 	}
 	
 	public void setOnFolderSelectedListener(OnFolderSelectedListener onFolderSelectedListener) {
@@ -222,6 +236,12 @@ class ImageFolderTree extends JPanel {
 				cp.removeAll();
 				cp.add(new ImageFolderTree(Drive));
 				frame.pack();
+			}
+
+			@Override
+			public void onUnplugUSB() {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 		

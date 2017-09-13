@@ -11,18 +11,19 @@ public class USBDetector {
 	private Timer m_Timer;
 	private TimerTask m_TimerTask;
 	
-	private Vector USBDriverLetters = new Vector();
+	private Vector<String> USBDriveLetters = new Vector<String>();
 	
 	private final void findUSB() {
 		FileSystemView fsv = FileSystemView.getFileSystemView();
 		
+		try {
 		File[] roots = File.listRoots();
 		for (int i = 0; i < roots.length; i ++) {
 			if(roots[i] == null) continue;
 			if ((fsv.getSystemTypeDescription(roots[i]).contains("USB")
 					|| fsv.getSystemTypeDescription(roots[i]).contains("Removable"))
-					&& !(USBDriverLetters.contains(roots[i].getPath()))) {
-				USBDriverLetters.addElement(roots[i].getPath());
+					&& !(USBDriveLetters.contains(roots[i].getPath()))) {
+				USBDriveLetters.addElement(roots[i].getPath());
 				
 				this.m_OnPlugUSBListener.onPlugUSB(roots[i]);
 				
@@ -30,6 +31,23 @@ public class USBDetector {
 //				break;
 //				System.out.println(roots[i].getPath());
 			}
+		}
+		
+		USBDriveLetters_loop:
+		for (int j = USBDriveLetters.size() - 1; j > -1; j --) {
+			for (int k = 0; k < roots.length; k ++) {
+				if ((fsv.getSystemTypeDescription(roots[k]).contains("USB")
+					|| fsv.getSystemTypeDescription(roots[k]).contains("Removable"))
+					&& USBDriveLetters.get(j).equals(roots[k].getPath())) {
+					continue USBDriveLetters_loop;
+				}
+			}
+			USBDriveLetters.removeElementAt(j);
+			this.m_OnPlugUSBListener.onUnplugUSB();
+		}
+		}
+		catch(Exception e) {
+			this.m_OnPlugUSBListener.onUnplugUSB();
 		}
 	}
 	
@@ -59,5 +77,6 @@ public class USBDetector {
 	
 	public interface OnPlugUSBListener {
 		void onPlugUSB(File Drive);
+		void onUnplugUSB();
 	}
 }
