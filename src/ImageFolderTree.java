@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Vector;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -21,13 +22,18 @@ class ImageFolderTree extends JPanel {
 	private OnFolderSelectedListener m_OnFolderSelectedListener = null;
 	private JTree m_tree = null;
 	private File m_dir;
+	private JLabel message;
+	
 	
 	/*Constructor*/
 	public ImageFolderTree() {
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.BLACK);
+		message = new JLabel("<html>Please add your USB device and wait for the directory to appear below.  Then select a folder to show the picture files within the folder.</html>");
+		message.setForeground(Color.WHITE);
+		this.add(message, BorderLayout.NORTH);
 	}
-	
+/*	
 	public ImageFolderTree(File dir) {
 		this.m_dir = new File(dir.getPath());
 		this.setLayout(new BorderLayout());
@@ -46,13 +52,16 @@ class ImageFolderTree extends JPanel {
 				}
 			}
 		});
-		*/
+		//**
 		// Lastly, put the JTree into a JScrollPane
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.getViewport().add(m_tree);
+		message = new JLabel("<html>Please add your USB device and wait for the directory to appear below.  Then select a folder to show the picture files within the folder.</html>");
+		message.setForeground(Color.WHITE);
+		this.add(message, BorderLayout.NORTH);
 		this.add(scrollPane, BorderLayout.CENTER);
 	}
-	
+*/	
 	public void setDir(File dir) {
 		this.m_dir = new File(dir.getPath());
 		this.removeAll();
@@ -99,6 +108,11 @@ class ImageFolderTree extends JPanel {
 		// Lastly, put the JTree into a JScrollPane
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.getViewport().add(m_tree);
+		if(imageDirs.size() > 0) {
+			message = new JLabel("<html>Please select a folder below to show the picture files within the folder.</html>");
+			message.setForeground(Color.WHITE);
+			this.add(message, BorderLayout.NORTH);
+		}
 		this.add(scrollPane, BorderLayout.CENTER);
 	}
 	
@@ -220,7 +234,7 @@ class ImageFolderTree extends JPanel {
 		void onFolderSelected(File folder);
 	}
 	
-	
+/*	
 	public static void notmain(String[] args) {
 		JFrame frame = new JFrame("FileTree");
 		frame.setBackground(Color.BLACK);
@@ -250,7 +264,7 @@ class ImageFolderTree extends JPanel {
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
+*/	
 	public class MyCellRenderer extends DefaultTreeCellRenderer {
 		
 		@Override
