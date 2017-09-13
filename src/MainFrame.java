@@ -28,7 +28,7 @@ class MainFrame extends JFrame {
 		int width = screenSize.width;
 		int height = screenSize.height;
 		
-		this.setTitle("THEOCRATIC PICTURE VIEWER");
+		this.setTitle("Theocratic Picture Viewer");
 		
 		imageGallery = new ImageGallery();
 		imageGallery.setOnImageSelectedListener(new ImageGallery.OnImageSelectedListener() {
