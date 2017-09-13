@@ -109,7 +109,7 @@ class ImageFolderTree extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.getViewport().add(m_tree);
 		if(imageDirs.size() > 0) {
-			message = new JLabel("<html>Please select a folder below to show the picture files within the folder.</html>");
+			message = new JLabel("<html>You can now remove the USB drive.  The pictures are loaded onto this machine and will auto-delete when you close this program.<br>Please select a folder below to show the picture files within the folder.</html>");
 			message.setForeground(Color.WHITE);
 			this.add(message, BorderLayout.NORTH);
 		}
