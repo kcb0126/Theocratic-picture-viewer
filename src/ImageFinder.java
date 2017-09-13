@@ -9,7 +9,7 @@ import java.util.TimerTask;
 import javax.swing.filechooser.FileSystemView;
 
 public class ImageFinder {
-	private static final String[] file_types = {"png", "gif", "jpg", "jpeg", "tif", "pdf"};
+	private static final String[] file_types = {"png", "gif", "jpg", "jpeg", "tif", "pdf", "bmp"};
 	
 	public static File tempDrive;
 	

@@ -32,7 +32,7 @@ class ImageGallery extends JPanel {
 	public ImageGallery() {
 		this.setBackground(Color.BLACK);
 		this.setLayout(new BorderLayout(10, 10));
-		String strInstruction = "<html><center>Use arrow up/down keys to show the image on the secondary screen.<br>Supported file types PNG, GIF, JPG, JPEG, PDF and TIF</center></html>";
+		String strInstruction = "<html><center><h2>Use arrow up/down keys to show the image on the secondary screen.</h2>Supported file types PNG, GIF, JPG, JPEG, PDF and TIF</center></html>";
 		JLabel commentLabel = new JLabel(strInstruction, SwingConstants.CENTER);
 		commentLabel.setBackground(Color.BLACK);
 		commentLabel.setForeground(Color.WHITE);

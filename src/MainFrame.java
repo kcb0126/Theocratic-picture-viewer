@@ -9,6 +9,10 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.net.ServerSocket;
+import java.nio.channels.FileLock;
 
 import javax.swing.*;
 
@@ -18,7 +22,14 @@ class MainFrame extends JFrame {
 	public ImageGallery imageGallery;
 	
 	public static void main(String[] args) {
-		sharedInstance = new MainFrame();
+		
+		if(lockInstance(System.getProperty("java.io.tmpdir") + "\\USBDetector\\app.lock")) {
+			sharedInstance = new MainFrame();
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "The application is already running");
+			System.exit(0);
+		}
 	}
 	
 	private ImageViewerPanel m_imageViewerPanel;
@@ -117,5 +128,41 @@ class MainFrame extends JFrame {
 		
 		this.setVisible(true);
 //		imageViewFrame.setVisible(true);
+	}
+	
+	public static void PreventDoubleInstance() {
+		ServerSocket ss;
+		try {
+			ss = new ServerSocket(4004);
+			System.out.println(ss.isClosed());
+		} catch (IOException e) {
+			System.out.println("exception");
+			e.printStackTrace();
+		}
+	}
+	
+	private static boolean lockInstance(final String lockFile) {
+	    try {
+	        final File file = new File(lockFile);
+	        final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
+	        final FileLock fileLock = randomAccessFile.getChannel().tryLock();
+	        if (fileLock != null) {
+	            Runtime.getRuntime().addShutdownHook(new Thread() {
+	                public void run() {
+	                    try {
+	                        fileLock.release();
+	                        randomAccessFile.close();
+	                        file.delete();
+	                    } catch (Exception e) {
+//	                        log.error("Unable to remove lock file: " + lockFile, e);
+	                    }
+	                }
+	            });
+	            return true;
+	        }
+	    } catch (Exception e) {
+//	        log.error("Unable to create and/or lock file: " + lockFile, e);
+	    }
+	    return false;
 	}
 }
