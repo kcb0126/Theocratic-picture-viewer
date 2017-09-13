@@ -141,9 +141,10 @@ class ImageGallery extends JPanel {
 						}
 						else {
 							newBrokenCellIndex = Math.min(m_brokenCellIndex + 1, cells.size() - 1);
-							if(newBrokenCellIndex > m_brokenCellIndex) {
-								breakCellAt(newBrokenCellIndex);
+							if(newBrokenCellIndex == m_brokenCellIndex) {
+								newBrokenCellIndex = 0;
 							}
+							breakCellAt(newBrokenCellIndex);
 						}
 						break;
 					default:
