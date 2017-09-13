@@ -4,16 +4,16 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
 
 class ImageCellPanel extends JPanel {
 	private String imagePath;
@@ -50,6 +50,12 @@ class ImageCellPanel extends JPanel {
 		JLabel label = new JLabel();
 		ImageIcon icon = new ImageIcon(imagePath);
 		label.setIcon(new ImageIcon(icon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
+		label.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				m_OnBreakListener.onBreak(m_index);
+				m_OnBreakListener.onUnbreak(m_index);
+			}
+		});
 		imageWithCheck.add(label, BorderLayout.CENTER);
 		JPanel eastPanel = new JPanel();
 		eastPanel.setBackground(Color.BLACK);

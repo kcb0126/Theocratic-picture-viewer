@@ -75,7 +75,7 @@ class ImageGallery extends JPanel {
 				removeButton.setEnabled(false);
 			}
 		};
-		timer.scheduleAtFixedRate(timerTask, 0, 1000);
+		timer.scheduleAtFixedRate(timerTask, 0, 100);
 
 		JButton clearButton = new JButton("Clear");
 		clearButton.addActionListener(new ActionListener() {
