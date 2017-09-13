@@ -71,6 +71,16 @@ class MainFrame extends JFrame {
 		
 		imageViewFrame.setLayout(new GridLayout(1, 1));
 		imageViewFrame.add(m_imageViewerPanel);
+		imageViewFrame.setUndecorated(true);
+		
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(new WindowAdapter() {
+			
+			@Override
+			public void windowClosing(WindowEvent windowEvent) {
+				System.exit(0);
+			}
+		});
 		if(gs.length == 1) {
 			this.setSize(width / 2, height - 50);
 			imageViewFrame.setSize(width / 2, height - 50);
@@ -100,15 +110,5 @@ class MainFrame extends JFrame {
 		
 		this.setVisible(true);
 //		imageViewFrame.setVisible(true);
-		imageViewFrame.setUndecorated(true);
-		
-		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		this.addWindowListener(new WindowAdapter() {
-			
-			@Override
-			public void windowClosing(WindowEvent windowEvent) {
-				System.exit(0);
-			}
-		});
 	}
 }
