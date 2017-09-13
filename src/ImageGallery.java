@@ -56,6 +56,7 @@ class ImageGallery extends JPanel {
 					}
 				}
 				setDir(m_dir);
+				m_onImageSelectedListener.onBroken();
 				MainFrame.sharedInstance.imageFolderTree.refresh();
 			}
 		});
@@ -72,6 +73,7 @@ class ImageGallery extends JPanel {
 					file1.delete();
 				}
 				setDir(m_dir);
+				m_onImageSelectedListener.onBroken();
 				MainFrame.sharedInstance.imageFolderTree.refresh();
 			}
 		});
