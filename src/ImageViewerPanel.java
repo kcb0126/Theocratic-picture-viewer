@@ -2,7 +2,9 @@
 import java.awt.Color;
 import java.awt.Image;
 import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -40,7 +42,15 @@ public class ImageViewerPanel extends JPanel {
 			if(ImageFinder.isPDF(new File(imagePath))) {
 				imagePath = imagePath + ".png_";
 			}
-			ImageIcon image = new ImageIcon(imagePath);
+			Image img = new ImageIcon().getImage();
+			try {
+				img = ImageIO.read(new File(imagePath));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			ImageIcon image = new ImageIcon(img);
+//			ImageIcon image = new ImageIcon(imagePath);
 			
 			int originalWidth = image.getIconWidth();
 			int originalHeight = image.getIconHeight();

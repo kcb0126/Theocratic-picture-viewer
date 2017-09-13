@@ -7,7 +7,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -48,7 +50,15 @@ class ImageCellPanel extends JPanel {
 		checkBox.setBackground(Color.BLACK);
 		imageWithCheck.add(checkBox, BorderLayout.WEST);
 		JLabel label = new JLabel();
-		ImageIcon icon = new ImageIcon(imagePath);
+		Image image = new ImageIcon().getImage();
+		try {
+			image = ImageIO.read(new File(imagePath));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		ImageIcon icon = new ImageIcon(image);
+//		ImageIcon icon = new ImageIcon(imagePath);
 		label.setIcon(new ImageIcon(icon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT)));
 		label.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
