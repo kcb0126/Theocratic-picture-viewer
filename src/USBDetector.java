@@ -42,8 +42,9 @@ public class USBDetector {
 					continue USBDriveLetters_loop;
 				}
 			}
-			USBDriveLetters.removeElementAt(j);
+			USBDriveLetters.removeAllElements();
 			this.m_OnPlugUSBListener.onUnplugUSB();
+			return;
 		}
 		}
 		catch(Exception e) {

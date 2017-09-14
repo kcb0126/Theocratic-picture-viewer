@@ -117,6 +117,8 @@ class ImageFolderTree extends JPanel {
 	}
 	
 	public void addDir(File dir) {
+		message.setText("<html>You can now remove the USB drive.  The pictures are loaded onto this machine and will auto-delete when you close this program.<br>Please select a folder below to show the picture files within the folder.</html>");
+		this.add(message, BorderLayout.NORTH);
 		if (this.m_dir == null) {
 			this.setDir(dir);
 		}
@@ -169,6 +171,10 @@ class ImageFolderTree extends JPanel {
 		m_tree.setBackground(Color.BLACK);
 		m_tree.setForeground(Color.WHITE);
 		m_tree.setCellRenderer(new MyCellRenderer());
+		this.add(m_tree, BorderLayout.CENTER);
+		message = new JLabel("<html>Please add your USB device and wait for the directory to appear below.  Then select a folder to show the picture files within the folder.</html>");
+		message.setForeground(Color.WHITE);
+		this.add(message, BorderLayout.NORTH);
 		this.setVisible(false);
 		this.setVisible(true);
 	}

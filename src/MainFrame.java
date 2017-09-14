@@ -101,7 +101,7 @@ class MainFrame extends JFrame {
 			gs[0].setFullScreenWindow(this);
 			gs[1].setFullScreenWindow(imageViewFrame);
 		}
-		
+		imageViewFrame.setVisible(false);
 //		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, navigationSplitPane, m_imageViewerPanel);
 //		splitPane.setDividerLocation(width / 2);
 		
@@ -128,17 +128,6 @@ class MainFrame extends JFrame {
 		
 		this.setVisible(true);
 //		imageViewFrame.setVisible(true);
-	}
-	
-	public static void PreventDoubleInstance() {
-		ServerSocket ss;
-		try {
-			ss = new ServerSocket(4004);
-			System.out.println(ss.isClosed());
-		} catch (IOException e) {
-			System.out.println("exception");
-			e.printStackTrace();
-		}
 	}
 	
 	private static boolean lockInstance(final String lockFile) {
