@@ -141,11 +141,22 @@ class ImageGallery extends JPanel {
 						newBrokenCellIndex = Math.max(m_brokenCellIndex - 1, 0);
 						breakCellAt(newBrokenCellIndex);
 						break;
+						*/
 					case KeyEvent.VK_UP:
-						cellCountInRow = MainFrame.sharedInstance.imageGallery.getWidth() / cells.get(0).getWidth();
-						newBrokenCellIndex = Math.max(m_brokenCellIndex - cellCountInRow, 0);
-						breakCellAt(newBrokenCellIndex);
+						if(!cells.get(m_brokenCellIndex).isBroken()) {
+							breakCellAt(m_brokenCellIndex);
+						}
+						else {
+							newBrokenCellIndex = Math.max(m_brokenCellIndex - 1, 0);
+							if(newBrokenCellIndex == m_brokenCellIndex) {
+								newBrokenCellIndex = cells.size() - 1;
+							}
+							breakCellAt(newBrokenCellIndex);
+							cells.get(newBrokenCellIndex).setBroken(false);
+							cells.get(newBrokenCellIndex).unbreak();
+						}
 						break;
+						/*
 					case KeyEvent.VK_RIGHT:
 						newBrokenCellIndex = Math.min(m_brokenCellIndex + 1, cells.size() - 1);
 						breakCellAt(newBrokenCellIndex);
