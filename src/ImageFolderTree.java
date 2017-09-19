@@ -119,7 +119,8 @@ class ImageFolderTree extends JPanel {
 	public void addDir(File dir) {
 		message.setText("<html>You can now remove the USB drive.  The pictures are loaded onto this machine and will auto-delete when you close this program.<br>Please select a folder below to show the picture files within the folder.</html>");
 		this.add(message, BorderLayout.NORTH);
-		if (this.m_dir == null) {
+//		if (this.m_dir == null) {
+		if (true) {
 			this.setDir(dir);
 		}
 		else {

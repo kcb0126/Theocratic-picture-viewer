@@ -87,7 +87,9 @@ public class ImageFinder {
 	public static void copyImagesToTemp(File dir, File tmpDir) {
 		if(tmpDir == null) {
 			tmpDir = new File(System.getProperty("java.io.tmpdir") + "\\USBDetector");
+			deleteDirectory(tmpDir);
 			tmpDir.mkdirs();
+			
 		}
 		if(hasImage(dir)) {
 			String dirName = dir.getName();
@@ -119,6 +121,24 @@ public class ImageFinder {
 				}
 			}
 		}
+	}
+	
+	public static boolean deleteDirectory(File path) {
+		if(!path.exists()) {
+			return false;
+		}
+		
+		File[] files = path.listFiles();
+		for(File file : files) {
+			if(file.isDirectory()) {
+				deleteDirectory(file);
+			}
+			else {
+				file.delete();
+			}
+		}
+		
+		return path.delete();
 	}
 	
 	public void notmain() {

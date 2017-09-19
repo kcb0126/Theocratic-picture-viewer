@@ -43,12 +43,12 @@ public class USBDetector {
 				}
 			}
 			USBDriveLetters.removeAllElements();
-			this.m_OnPlugUSBListener.onUnplugUSB();
+//			this.m_OnPlugUSBListener.onUnplugUSB();
 			return;
 		}
 		}
 		catch(Exception e) {
-			this.m_OnPlugUSBListener.onUnplugUSB();
+//			this.m_OnPlugUSBListener.onUnplugUSB();
 		}
 	}
 	
