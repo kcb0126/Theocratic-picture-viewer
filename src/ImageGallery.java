@@ -13,6 +13,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -36,7 +37,26 @@ class ImageGallery extends JPanel {
 		JLabel commentLabel = new JLabel(strInstruction, SwingConstants.CENTER);
 		commentLabel.setBackground(Color.BLACK);
 		commentLabel.setForeground(Color.WHITE);
-		this.add(commentLabel, BorderLayout.NORTH);
+		JPanel titlePanel = new JPanel();
+		titlePanel.setBackground(Color.BLACK);
+		titlePanel.setLayout(new BorderLayout());
+		titlePanel.add(commentLabel, BorderLayout.CENTER);
+		JPanel minButtonPanel = new JPanel();
+		minButtonPanel.setBackground(Color.BLACK);
+		JButton minButton = new JButton("_");
+		minButton.setFocusable(false);
+		
+		minButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainFrame.sharedInstance.setState(JFrame.ICONIFIED);
+			}
+		});
+		minButtonPanel.add(minButton);
+		titlePanel.add(minButtonPanel, BorderLayout.EAST);
+		this.add(titlePanel, BorderLayout.NORTH);
+//		this.add(commentLabel, BorderLayout.NORTH);
 		picturePanel = new JPanel();
 		picturePanel.setBackground(Color.BLACK);
 //		picturePanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
