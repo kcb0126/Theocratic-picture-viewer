@@ -1,8 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.File;
 import java.util.Collections;
 import java.util.Vector;
@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.SwingConstants;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -63,6 +64,17 @@ class ImageFolderTree extends JPanel {
 	}
 */	
 	public void setDir(File dir) {
+		JFrame waitFrame = new JFrame("Wait a moment...");
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = screenSize.width / 2 - 200;
+		int y = screenSize.height / 2 - 120;
+		waitFrame.setLocation(x, y);
+		waitFrame.setSize(400, 240);
+		waitFrame.setLayout(new BorderLayout());
+		waitFrame.add(new JLabel("Please wait a moment.  The directory is being read now...", SwingConstants.CENTER), BorderLayout.CENTER);
+		waitFrame.setVisible(true);
+		
+		
 		this.m_dir = new File(dir.getPath());
 		this.removeAll();
 		
@@ -114,6 +126,7 @@ class ImageFolderTree extends JPanel {
 			this.add(message, BorderLayout.NORTH);
 		}
 		this.add(scrollPane, BorderLayout.CENTER);
+		waitFrame.setVisible(false);
 	}
 	
 	public void addDir(File dir) {
