@@ -23,6 +23,9 @@ class MainFrame extends JFrame {
 	
 	public static void main(String[] args) {
 		
+		File lockfile = new File(System.getProperty("java.io.tmpdir") + "\\USBDetector");
+		lockfile.mkdir();
+		
 		if(lockInstance(System.getProperty("java.io.tmpdir") + "\\USBDetector\\app.lock")) {
 			sharedInstance = new MainFrame();
 		}
