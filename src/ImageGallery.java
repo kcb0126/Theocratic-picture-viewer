@@ -70,11 +70,8 @@ class ImageGallery extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				for(int i = 0; i < cells.size(); i ++) {
 					if(cells.get(i).isChecked()) {
-//						File file = new File(cells.get(i).getImagePath());
-//						file.delete();
-						File file1 = new File(cells.get(i).getImagePath().replace(ImageFinder.tempDrivePath, ImageFinder.tempDriveLetter + ":"));
-//						System.out.println(file1.getPath());
-						file1.delete();
+						File file = new File(cells.get(i).getImagePath());
+						file.delete();
 					}
 				}
 				setDir(m_dir);
@@ -103,11 +100,8 @@ class ImageGallery extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for(int i = 0; i < cells.size(); i ++) {
-//					File file = new File(cells.get(i).getImagePath());
-//					file.delete();
-					File file1 = new File(cells.get(i).getImagePath().replace(ImageFinder.tempDrivePath, ImageFinder.tempDriveLetter + ":"));
-//					System.out.println(file1.getPath());
-					file1.delete();
+					File file = new File(cells.get(i).getImagePath());
+					file.delete();
 				}
 				setDir(m_dir);
 				m_onImageSelectedListener.onBroken();
