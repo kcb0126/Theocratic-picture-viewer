@@ -127,6 +127,7 @@ class ImageGallery extends JPanel {
 		});
 		JButton downButton = new JButton("DOWN");
 		*/
+		
 		JButton exitButton = new JButton("EXIT");
 		exitButton.addActionListener(new ActionListener() {
 			
@@ -144,6 +145,20 @@ class ImageGallery extends JPanel {
 		buttonGroup.add(exitButton);
 		this.add(buttonGroup, BorderLayout.SOUTH);
 		this.setFocusable(true);
+		
+		JPanel switchButtonPanel = new JPanel();
+		switchButtonPanel.setBackground(Color.BLACK);
+		JButton switchButton = new JButton("Switch");
+		switchButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				MainFrame.sharedInstance.switchFrames();
+			}
+			
+		});
+		switchButtonPanel.add(switchButton);
+		titlePanel.add(switchButtonPanel, BorderLayout.WEST);
 		
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
 			@Override
