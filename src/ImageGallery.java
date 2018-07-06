@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
@@ -50,6 +51,7 @@ class ImageGallery extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				MainFrame.sharedInstance.manuallyIconified = true;
 				MainFrame.sharedInstance.setState(JFrame.ICONIFIED);
 			}
 		});
@@ -148,7 +150,8 @@ class ImageGallery extends JPanel {
 		
 		JPanel switchButtonPanel = new JPanel();
 		switchButtonPanel.setBackground(Color.BLACK);
-		JButton switchButton = new JButton("Switch");
+		JButton switchButton = new JButton("Switch Monitor");
+		switchButton.setFont(new Font("Arial", Font.PLAIN, 20));
 		switchButton.addActionListener(new ActionListener() {
 
 			@Override

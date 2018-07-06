@@ -39,6 +39,8 @@ class MainFrame extends JFrame {
 	private boolean galleryFirst = true;
 	private ImageViewerPanel m_imageViewerPanel;
 
+	public boolean manuallyIconified = false;
+	
 	public MainFrame() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = screenSize.width;
@@ -93,7 +95,17 @@ class MainFrame extends JFrame {
 			public void windowClosing(WindowEvent windowEvent) {
 				System.exit(0);
 			}
+			
+			@Override
+			public void windowIconified(WindowEvent windowEvent) {
+				if(MainFrame.sharedInstance.manuallyIconified) {
+					MainFrame.sharedInstance.manuallyIconified = false;
+				} else {
+					imageViewFrame.setState(JFrame.ICONIFIED);
+				}
+			}
 		});
+		
 		
 		arrangeFrames();
 		
